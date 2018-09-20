@@ -24,3 +24,8 @@ hs_err_pid*
 
 #pro
 mvnw
+.classpath
+.mvn/
+.project
+.settings/
+mvnw.cmd

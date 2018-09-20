@@ -1,9 +1,9 @@
 server:
-  port: 7777
+  port: 6666
 
 spring:
   application:
-    name: system-service-auth
+    name: system-service-auth-client
   redis:
     host: 127.0.0.1
     port: 6379
@@ -27,7 +27,24 @@ spring:
     prefer-file-system-access: true
     suffix: .ftl
     template-loader-path: classpath:/templates/
-    
+
+auth-server: http://localhost:7777 # 认证服务器地址
+
+security:
+  oauth2:
+    client:
+      client-id: client_2
+      client-secret: 123456
+      grant-type: password
+      scope: select
+      user-authorization-uri: ${auth-server}/oauth/authorize
+      access-token-uri: ${auth-server}/oauth/token
+    resource:
+      token-info-uri: ${auth-server}/oauth/check-token #由资源服务器用来解码访问令牌
+      user-info-uri: ${auth-server}/user # 一个可以获取认证授权的自定义接口，可以在授权服务器，也可以在其他服务器上
+      prefer-token-info: true # 如果同时配置了token-info-uri 和 user-info-uri，这个现象设置使用哪个取验证授权
+      jwt:
+        key-value: 123    
     
 mybatis:
   type-aliases-package: org.je.cloud.**.entity
